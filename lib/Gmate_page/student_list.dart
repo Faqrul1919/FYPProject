@@ -93,7 +93,7 @@ class StudentSearchState extends StatelessWidget {
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            color: Colors.black,
+            color: Colors.white,
           ),
           onPressed: () {
             Get.back();
@@ -190,6 +190,9 @@ class StudentSearchState extends StatelessWidget {
                                         ),
                                       ],
                                     ),
+                                    SizedBox(
+                                      height: 3,
+                                    ),
                                     Row(
                                       children: [
                                         //name
@@ -207,12 +210,14 @@ class StudentSearchState extends StatelessWidget {
                                         ),
                                       ],
                                     ),
-
+                                    SizedBox(
+                                      height: 3,
+                                    ),
                                     Row(
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            "Semester:" +
+                                            "Semester: " +
                                                 eachStudentRecord.semester!,
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
@@ -225,7 +230,9 @@ class StudentSearchState extends StatelessWidget {
                                         ),
                                       ],
                                     ),
-
+                                    SizedBox(
+                                      height: 3,
+                                    ),
                                     Row(
                                       children: [
                                         Expanded(
@@ -233,8 +240,26 @@ class StudentSearchState extends StatelessWidget {
                                             eachStudentRecord.months! +
                                                 "\n" +
                                                 eachStudentRecord.title! +
-                                                " " +
-                                                "[" +
+                                                " ",
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 1,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            "[" +
                                                 eachStudentRecord.groups! +
                                                 "]",
                                             maxLines: 2,
@@ -248,11 +273,18 @@ class StudentSearchState extends StatelessWidget {
                                         ),
                                       ],
                                     ),
-
+                                    SizedBox(
+                                      height: 3,
+                                    ),
                                     Row(
                                       children: [
                                         RatingBar.builder(
-                                          initialRating: 3,
+                                          initialRating: eachStudentRecord
+                                                      .avg_rating ==
+                                                  null
+                                              ? 0
+                                              : double.parse(eachStudentRecord
+                                                  .avg_rating!),
                                           minRating: 1,
                                           direction: Axis.horizontal,
                                           allowHalfRating: true,
@@ -271,7 +303,7 @@ class StudentSearchState extends StatelessWidget {
                                           width: 8,
                                         ),
                                         Text(
-                                          "3",
+                                          '${eachStudentRecord.avg_rating == null ? '0' : '(${eachStudentRecord.avg_rating.toString()})'}',
                                           style: const TextStyle(
                                             color: Colors.black,
                                           ),
@@ -291,6 +323,9 @@ class StudentSearchState extends StatelessWidget {
                         ),
                         Column(
                           children: [
+                            SizedBox(
+                              height: 35,
+                            ),
                             Align(
                               alignment: Alignment.bottomRight,
                               child: IconButton(

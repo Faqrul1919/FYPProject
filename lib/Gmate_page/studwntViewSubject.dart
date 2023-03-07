@@ -262,9 +262,27 @@ class _StudentViewSubject extends State<StudentViewSubject> {
                                       //name
                                       Expanded(
                                         child: Text(
-                                          eachStudentSubject.title! +
-                                              "    " +
-                                              "[" +
+                                          eachStudentSubject.title!,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    children: [
+                                      //name
+                                      Expanded(
+                                        child: Text(
+                                          "[" +
                                               eachStudentSubject.groups! +
                                               "]",
                                           maxLines: 2,
@@ -290,7 +308,7 @@ class _StudentViewSubject extends State<StudentViewSubject> {
                       Column(
                         children: [
                           Align(
-                            alignment: Alignment.centerRight,
+                            alignment: Alignment.topRight,
                             child: IconButton(
                               onPressed: () {
                                 deletesubjectList(eachStudentSubject.stud_reg!);

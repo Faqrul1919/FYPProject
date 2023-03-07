@@ -1,39 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:gmate/admin_model/group.dart';
+import 'package:gmate/admin_model/intake.dart';
 import 'package:gmate/admin_service/groupService.dart';
 
-class AddEditGroup extends StatefulWidget {
-  var groups;
+import '../admin_service/intakeService.dart';
+
+class AddEditIntake extends StatefulWidget {
+  var intake;
   var index;
 
   // ignore: use_key_in_widget_constructors
-  AddEditGroup({this.groups, this.index});
+  AddEditIntake({this.intake, this.index});
 
   @override
-  _AddEditGroupState createState() => _AddEditGroupState();
+  _AddEditIntakeState createState() => _AddEditIntakeState();
 }
 
 final _formKey = GlobalKey<FormState>();
 
-class _AddEditGroupState extends State<AddEditGroup> {
-  final TextEditingController _groups = TextEditingController();
+class _AddEditIntakeState extends State<AddEditIntake> {
+  final TextEditingController _intake = TextEditingController();
 
   bool editMode = false;
 
-  add(Groups groups) async {
-    await GroupService().addGroup(groups).then((success) {
+  add(Intake intake) async {
+    await IntakeService().addIntake(intake).then((success) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Group Class Added!")),
+        const SnackBar(content: Text("Intake Added!")),
       );
       Navigator.pop(context);
     });
     //print("Cidadão Adicionado!");
   }
 
-  update(Groups groups) async {
-    await GroupService().updateGroup(groups).then((success) {
+  update(Intake intake) async {
+    await IntakeService().updateIntake(intake).then((success) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Group Class Updated!")),
+        const SnackBar(content: Text("Intake Updated!")),
       );
       Navigator.pop(context);
     });
@@ -45,7 +48,7 @@ class _AddEditGroupState extends State<AddEditGroup> {
     super.initState();
     if (widget.index != null) {
       editMode = true;
-      _groups.text = widget.groups.groups;
+      _intake.text = widget.intake.months;
     }
   }
 
@@ -61,7 +64,7 @@ class _AddEditGroupState extends State<AddEditGroup> {
           appBar: AppBar(
             backgroundColor: Colors.grey,
             centerTitle: true,
-            title: Text(editMode ? "UPDATE GROUP" : "ADD GROUP"),
+            title: Text(editMode ? "UPDATE INTAKE" : "ADD INTAKE"),
           ),
           body: Center(
             child: Container(
@@ -81,9 +84,9 @@ class _AddEditGroupState extends State<AddEditGroup> {
                         ),
                         child: TextField(
                           textAlign: TextAlign.center,
-                          controller: _groups,
+                          controller: _intake,
                           decoration: const InputDecoration(
-                            hintText: 'Enter Class Group',
+                            hintText: 'Enter Intake',
                             border: InputBorder.none,
                           ),
                         ),
@@ -94,24 +97,24 @@ class _AddEditGroupState extends State<AddEditGroup> {
                       ElevatedButton(
                         onPressed: () {
                           if (editMode) {
-                            Groups groups = Groups(
-                              group_id: widget.groups.group_id,
-                              groups: _groups.text,
+                            Intake intake = Intake(
+                              intake_id: widget.intake.intake_id,
+                              months: _intake.text,
                             );
-                            update(groups);
+                            update(intake);
                           } else {
-                            if (_groups.text.isEmpty) {
+                            if (_intake.text.isEmpty) {
                               // ignore: prefer_const_constructors
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                     content: Text("This field is required")),
                               );
                             } else {
-                              Groups groups = Groups(
-                                group_id: '',
-                                groups: _groups.text,
+                              Intake intake = Intake(
+                                intake_id: '',
+                                months: _intake.text,
                               );
-                              add(groups);
+                              add(intake);
                             }
                           }
                         },

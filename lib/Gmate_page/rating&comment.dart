@@ -22,6 +22,7 @@ class StudentRatingInformationScreen extends StatefulWidget {
 }
 
 class _StudentRatingReview extends State<StudentRatingInformationScreen> {
+  var formKey = GlobalKey<FormState>();
   final TextEditingController rating = TextEditingController();
   final TextEditingController comments = TextEditingController();
 
@@ -126,211 +127,208 @@ class _StudentRatingReview extends State<StudentRatingInformationScreen> {
       ),
       padding: const EdgeInsets.symmetric(horizontal: 25),
       child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 25,
-            ),
+        child: Form(
+          key: formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 25,
+              ),
 
-            //name
-            Center(
-              child: Text(
-                "Rate & Comment",
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 21,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-
-            Divider(
-              height: 1,
-              thickness: 2,
-            ),
-            const SizedBox(
-              height: 25,
-            ),
-            Center(
-              child: Text(
-                "Give Rate and Comment to :",
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 18,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Center(
-              child: Text(
-                widget.ratestud!.studentname!,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Center(
-              child: Text(
-                "Rate:",
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 3,
-            ),
-            Center(
-              child: SizedBox(
-                width: 100,
-                height: 40,
-                child: TextField(
-                  textAlign: TextAlign.center,
-                  controller: rating,
-                  maxLength: 1,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.allow(
-                      RegExp(r'[1-5]'),
-                    ),
-                  ],
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
-                  decoration: InputDecoration(
-                    counterText: "",
-                    hintText: "?/5",
-                    hintStyle: TextStyle(fontSize: 14),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      borderSide: BorderSide(
-                        color: Colors.black,
-                        width: 10,
-                        style: BorderStyle.none,
-                      ),
-                    ),
-                    filled: true,
-                    contentPadding: EdgeInsets.all(16),
-                    fillColor: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 3,
-            ),
-            Center(
-              child: Text(
-                "Hint: Number of rate given should be less than 5",
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 10,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Center(
-              child: Text(
-                "eg: 1.8, 2.5, 3.7, 4.4",
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 10,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-
-            const SizedBox(
-              height: 30,
-            ),
-            Center(
-              child: Text(
-                "Comment:",
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 3,
-            ),
-            Center(
-              child: SizedBox(
-                width: 400,
-                child: TextField(
-                  textAlign: TextAlign.center,
-                  maxLength: 255,
-                  controller: comments,
-                  keyboardType: TextInputType.text,
-                  minLines: 1,
-                  maxLines: null,
-                  maxLengthEnforced: true,
-                  decoration: InputDecoration(
-                    hintStyle: TextStyle(fontSize: 14),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      borderSide: BorderSide(
-                        color: Colors.black,
-                        width: 10,
-                        style: BorderStyle.none,
-                      ),
-                    ),
-                    filled: true,
-                    contentPadding: EdgeInsets.all(16),
-                    fillColor: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 10),
-
-            Center(
-              child: RaisedButton(
-                onPressed: () {
-                  rateStudentFavorite();
-                },
-                color: Color.fromARGB(255, 0, 109, 33),
-                padding: EdgeInsets.symmetric(horizontal: 50),
-                elevation: 2,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
+              //name
+              Center(
                 child: Text(
-                  "SUBMIT",
-                  style: TextStyle(
-                      fontSize: 14, letterSpacing: 2.2, color: Colors.white),
+                  "Rate & Comment",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 21,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 20),
-          ],
+              const SizedBox(
+                height: 10,
+              ),
+
+              Divider(
+                height: 1,
+                thickness: 2,
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              Center(
+                child: Text(
+                  "Give Rate and Comment to :",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Center(
+                child: Text(
+                  widget.ratestud!.studentname!,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Center(
+                child: Text(
+                  "Rate:",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 3,
+              ),
+              Center(
+                child: SizedBox(
+                  width: 100,
+                  height: 59,
+                  child: TextFormField(
+                    textAlign: TextAlign.center,
+                    controller: rating,
+                    validator: (val) => val == "" ? "*Required" : null,
+                    maxLength: 1,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(
+                        RegExp(r'[1-5]'),
+                      ),
+                    ],
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
+                    decoration: InputDecoration(
+                      counterText: "",
+                      hintText: "?/5",
+                      hintStyle: TextStyle(fontSize: 14),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                          width: 10,
+                          style: BorderStyle.none,
+                        ),
+                      ),
+                      filled: true,
+                      contentPadding: EdgeInsets.all(16),
+                      fillColor: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 3,
+              ),
+              Center(
+                child: Text(
+                  "Hint: Number of rate given should be less than 5",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 10,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+
+              const SizedBox(
+                height: 30,
+              ),
+              Center(
+                child: Text(
+                  "Comment:",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 3,
+              ),
+              Center(
+                child: SizedBox(
+                  width: 400,
+                  child: TextFormField(
+                    textAlign: TextAlign.center,
+                    maxLength: 255,
+                    controller: comments,
+                    validator: (val) =>
+                        val == "" ? "Please give comments" : null,
+                    keyboardType: TextInputType.text,
+                    minLines: 1,
+                    maxLines: null,
+                    maxLengthEnforced: true,
+                    decoration: InputDecoration(
+                      hintStyle: TextStyle(fontSize: 14),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                          width: 10,
+                          style: BorderStyle.none,
+                        ),
+                      ),
+                      filled: true,
+                      contentPadding: EdgeInsets.all(16),
+                      fillColor: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 10),
+
+              Center(
+                child: RaisedButton(
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      rateStudentFavorite();
+                    }
+                  },
+                  color: Color.fromARGB(255, 0, 109, 33),
+                  padding: EdgeInsets.symmetric(horizontal: 50),
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Text(
+                    "SUBMIT",
+                    style: TextStyle(
+                        fontSize: 14, letterSpacing: 2.2, color: Colors.white),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
     );

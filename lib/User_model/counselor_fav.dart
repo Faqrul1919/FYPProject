@@ -7,6 +7,7 @@ class C_Favourite {
   String? semester;
   String? phone_num;
   String? email;
+  String? avg_rating;
 
   C_Favourite({
     this.save_id,
@@ -17,6 +18,7 @@ class C_Favourite {
     this.semester,
     this.phone_num,
     this.email,
+    this.avg_rating,
   });
 
   factory C_Favourite.fromJson(Map<String, dynamic> json) => C_Favourite(
@@ -28,5 +30,6 @@ class C_Favourite {
         semester: json['semester'],
         phone_num: json['phone_num'],
         email: json['email'],
+        avg_rating: json['avg_rating'],
       );
 }

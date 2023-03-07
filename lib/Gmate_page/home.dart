@@ -52,6 +52,7 @@ class HomeState extends StatelessWidget {
           ),
           bottomNavigationBar: Obx(
             () => BottomNavigationBar(
+              backgroundColor: Color.fromARGB(255, 194, 193, 193),
               currentIndex: _indexNumber.value,
               onTap: (value) {
                 _indexNumber.value = value;
@@ -59,7 +60,7 @@ class HomeState extends StatelessWidget {
               showSelectedLabels: true,
               showUnselectedLabels: true,
               selectedItemColor: Colors.black,
-              unselectedItemColor: Colors.grey,
+              unselectedItemColor: Color.fromARGB(255, 43, 43, 43),
               items: List.generate(3, (index) {
                 var navBtnProperty = _navigationButtonsProperties[index];
                 return BottomNavigationBarItem(

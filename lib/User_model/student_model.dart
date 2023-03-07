@@ -48,22 +48,23 @@ class RegisteredSubject {
   String? title;
   String? groups;
   String? months;
+  String? avg_rating;
 
-  RegisteredSubject({
-    this.stud_reg,
-    this.acc_id,
-    this.subject_id,
-    this.group_id,
-    this.intake_id,
-    this.studentname,
-    this.student_id,
-    this.semester,
-    this.phone_num,
-    this.email,
-    this.title,
-    this.groups,
-    this.months,
-  });
+  RegisteredSubject(
+      {this.stud_reg,
+      this.acc_id,
+      this.subject_id,
+      this.group_id,
+      this.intake_id,
+      this.studentname,
+      this.student_id,
+      this.semester,
+      this.phone_num,
+      this.email,
+      this.title,
+      this.groups,
+      this.months,
+      this.avg_rating});
 
   factory RegisteredSubject.fromJson(Map<String, dynamic> json) =>
       RegisteredSubject(
@@ -80,6 +81,7 @@ class RegisteredSubject {
         email: json['email'],
         groups: json['groups'],
         months: json['months'],
+        avg_rating: json["avg_rating"],
       );
 }
 
@@ -92,17 +94,18 @@ class Student_Favourite {
   String? semester;
   String? phone_num;
   String? email;
+  String? avg_rating;
 
-  Student_Favourite({
-    this.save_id,
-    this.acc_id,
-    this.member_id,
-    this.studentname,
-    this.student_id,
-    this.semester,
-    this.phone_num,
-    this.email,
-  });
+  Student_Favourite(
+      {this.save_id,
+      this.acc_id,
+      this.member_id,
+      this.studentname,
+      this.student_id,
+      this.semester,
+      this.phone_num,
+      this.email,
+      this.avg_rating});
 
   factory Student_Favourite.fromJson(Map<String, dynamic> json) =>
       Student_Favourite(
@@ -114,5 +117,6 @@ class Student_Favourite {
         semester: json['semester'],
         phone_num: json['phone_num'],
         email: json['email'],
+        avg_rating: json["avg_rating"],
       );
 }

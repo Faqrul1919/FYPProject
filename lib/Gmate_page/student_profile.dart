@@ -83,10 +83,12 @@ class StudentProfile extends State<StudentProfileState> {
           const SizedBox(
             width: 16,
           ),
-          Text(
-            userData,
-            style: TextStyle(
-              fontSize: 15,
+          Expanded(
+            child: Text(
+              userData,
+              style: TextStyle(
+                fontSize: 15,
+              ),
             ),
           ),
         ],
@@ -121,7 +123,7 @@ class StudentProfile extends State<StudentProfileState> {
         child: ListView(
           children: [
             Text(
-              "Your Profile",
+              "Profile",
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
               textAlign: TextAlign.center,
             ),

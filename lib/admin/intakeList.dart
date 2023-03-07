@@ -1,44 +1,43 @@
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:gmate/admin_model/subject.dart';
-import 'package:gmate/admin_service/subjectService.dart';
+import 'package:gmate/admin/CRUDGrouppage.dart';
+import 'package:gmate/admin_model/intake.dart';
 import 'package:flutter/material.dart';
-import 'package:gmate/started/get_started.dart';
 
-import 'CRUDSubjectpage.dart';
+import '../admin_service/intakeService.dart';
+import 'CRUDIntakepage.dart';
 
-class SubjectList extends StatefulWidget {
+class IntakeList extends StatefulWidget {
   @override
-  _SubjectListState createState() => _SubjectListState();
+  _IntakeListState createState() => _IntakeListState();
 }
 
-class _SubjectListState extends State<SubjectList> {
-  late List<Subject> subjectList;
+class _IntakeListState extends State<IntakeList> {
+  late List<Intake> intakelist;
 
   bool loading = true;
 
-  getAllSubjects() async {
-    subjectList = await SubjectService().getSubject();
+  getAllIntake() async {
+    intakelist = await IntakeService().getIntake();
     setState(() {
       loading = false;
     });
     //  print("itens : ${itensList.length}");
   }
 
-  delete(Subject subject) async {
-    await SubjectService().deleteSubject(subject);
+  delete(Intake intake) async {
+    await IntakeService().deleteIntake(intake);
     setState(() {
       loading = false;
-      getAllSubjects();
+      getAllIntake();
     });
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: const Text("Subject Deleted")),
+      SnackBar(content: const Text("Intake Deleted")),
     );
   }
 
   @override
   void initState() {
     super.initState();
-    getAllSubjects();
+    getAllIntake();
   }
 
   @override
@@ -48,7 +47,7 @@ class _SubjectListState extends State<SubjectList> {
       appBar: AppBar(
         backgroundColor: Color(0xFF424242),
         automaticallyImplyLeading: false,
-        title: Text('Subjects List'),
+        title: Text('Intake List'),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
@@ -57,27 +56,9 @@ class _SubjectListState extends State<SubjectList> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => AddEditSubjects(),
+                  builder: (context) => AddEditIntake(),
                 ),
-              ).then((value) => getAllSubjects());
-            },
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.logout,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => GetStartedState()));
-              Fluttertoast.showToast(
-                  msg: "Successfully Logout",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.BOTTOM,
-                  timeInSecForIosWeb: 1,
-                  backgroundColor: Colors.green,
-                  textColor: Colors.black,
-                  fontSize: 16.0);
+              ).then((value) => getAllIntake());
             },
           ),
         ],
@@ -88,40 +69,41 @@ class _SubjectListState extends State<SubjectList> {
                 child: CircularProgressIndicator(),
               )
             : ListView.builder(
-                itemCount: subjectList.length,
+                itemCount: intakelist.length,
                 physics: BouncingScrollPhysics(),
                 itemBuilder: (ctx, i) {
-                  Subject subject = subjectList[i];
+                  Intake intake = intakelist[i];
                   return Card(
                     elevation: 2,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
                     child: ListTile(
-                      contentPadding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
+                      contentPadding: EdgeInsets.fromLTRB(10, 3, 10, 3),
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => AddEditSubjects(
-                              subject: subject,
+                            builder: (context) => AddEditIntake(
+                              intake: intake,
                               index: i,
                             ),
                           ),
-                        ).then((value) => getAllSubjects());
+                        ).then((value) => getAllIntake());
                       },
                       leading: CircleAvatar(
                         backgroundColor: Colors.blueGrey,
-                        child: Text('${subject.title[1]}' +
-                            '${subject.title[subject.title.length - 1]}'),
+                        child: Text('${intake.months[0]}' +
+                            '${intake.months[1]}' +
+                            '${intake.months[2]}'),
                       ),
-                      title: Text(subject.title),
+                      title: Text(intake.months),
                       trailing: IconButton(
                           icon: Icon(Icons.delete),
                           onPressed: () {
                             showDialog(
                               context: context,
                               builder: (ctx) => AlertDialog(
-                                title: Text('Delete Subject'),
+                                title: Text('Delete Group'),
                                 content: Text('Are You Sure?'),
                                 actions: <Widget>[
                                   TextButton(
@@ -138,7 +120,7 @@ class _SubjectListState extends State<SubjectList> {
                               ),
                             ).then((confirmed) {
                               if (confirmed) {
-                                delete(subject);
+                                delete(intake);
                               }
                             });
                           }),

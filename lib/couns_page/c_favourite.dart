@@ -55,7 +55,7 @@ class _CounsChatState extends State<CounsChatState> {
       appBar: AppBar(
         backgroundColor: Color(0xFF424242),
         title: Text(
-          'Student List',
+          'FAVOURITE',
         ),
         automaticallyImplyLeading: false,
       ),
@@ -110,7 +110,7 @@ class _CounsChatState extends State<CounsChatState> {
             //name
             Center(
               child: Text(
-                'Favorite',
+                'Favourite',
                 textAlign: TextAlign.center,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
@@ -169,6 +169,7 @@ class _CounsChatState extends State<CounsChatState> {
                   semester: eachFavoriteCounselorRecord.semester,
                   phone_num: eachFavoriteCounselorRecord.phone_num,
                   email: eachFavoriteCounselorRecord.email,
+                  avg_rating: eachFavoriteCounselorRecord.avg_rating,
                 );
 
                 return GestureDetector(
@@ -229,9 +230,9 @@ class _CounsChatState extends State<CounsChatState> {
                                         //name
                                         Expanded(
                                           child: Text(
-                                            "Student ID:" +
+                                            "Email: " +
                                                 eachFavoriteCounselorRecord
-                                                    .phone_num!,
+                                                    .email!,
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
                                             style: const TextStyle(
@@ -248,7 +249,7 @@ class _CounsChatState extends State<CounsChatState> {
                                         //name
                                         Expanded(
                                           child: Text(
-                                            "Student ID:" +
+                                            "Student ID: " +
                                                 eachFavoriteCounselorRecord
                                                     .student_id!,
                                             maxLines: 2,
@@ -267,7 +268,7 @@ class _CounsChatState extends State<CounsChatState> {
                                         //name
                                         Expanded(
                                           child: Text(
-                                            "Semester:" +
+                                            "Semester: " +
                                                 eachFavoriteCounselorRecord
                                                     .semester!,
                                             maxLines: 2,
@@ -277,6 +278,46 @@ class _CounsChatState extends State<CounsChatState> {
                                               color: Colors.black,
                                               fontWeight: FontWeight.normal,
                                             ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        //rating bar
+                                        RatingBar.builder(
+                                          initialRating:
+                                              eachFavoriteCounselorRecord
+                                                          .avg_rating ==
+                                                      null
+                                                  ? 0
+                                                  : double.parse(
+                                                      eachFavoriteCounselorRecord
+                                                          .avg_rating!),
+                                          minRating: 1,
+                                          direction: Axis.horizontal,
+                                          allowHalfRating: true,
+                                          itemCount: 5,
+                                          itemBuilder: (context, c) =>
+                                              const Icon(
+                                            Icons.star,
+                                            color: Colors.amber,
+                                          ),
+                                          onRatingUpdate: (updateRating) {},
+                                          ignoreGestures: true,
+                                          unratedColor: Colors.white,
+                                          itemSize: 20,
+                                        ),
+
+                                        const SizedBox(
+                                          width: 8,
+                                        ),
+
+                                        //rating num
+                                        Text(
+                                          '${eachFavoriteCounselorRecord.avg_rating == null ? '0' : '(${eachFavoriteCounselorRecord.avg_rating.toString()})'}',
+                                          style: const TextStyle(
+                                            color: Colors.black,
                                           ),
                                         ),
                                       ],
@@ -293,6 +334,9 @@ class _CounsChatState extends State<CounsChatState> {
                         ),
                         Column(
                           children: [
+                            SizedBox(
+                              height: 30,
+                            ),
                             Align(
                               alignment: Alignment.bottomRight,
                               child: IconButton(

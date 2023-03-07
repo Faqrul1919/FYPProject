@@ -2,6 +2,7 @@ import 'dart:convert';
 // ignore: avoid_web_libraries_in_flutter
 
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -65,7 +66,7 @@ class _StudentChatState extends State<StudentChatState> {
       appBar: AppBar(
         backgroundColor: Color(0xFF424242),
         title: Text(
-          'Favourite',
+          'FAVOURITE',
         ),
         automaticallyImplyLeading: false,
       ),
@@ -120,7 +121,7 @@ class _StudentChatState extends State<StudentChatState> {
             //name
             Center(
               child: Text(
-                'Favorite',
+                'Favourite',
                 textAlign: TextAlign.center,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
@@ -296,6 +297,46 @@ class _StudentChatState extends State<StudentChatState> {
                                         ),
                                       ],
                                     ),
+                                    Row(
+                                      children: [
+                                        //rating bar
+                                        RatingBar.builder(
+                                          initialRating:
+                                              eachFavoriteStudentRecord
+                                                          .avg_rating ==
+                                                      null
+                                                  ? 0
+                                                  : double.parse(
+                                                      eachFavoriteStudentRecord
+                                                          .avg_rating!),
+                                          minRating: 1,
+                                          direction: Axis.horizontal,
+                                          allowHalfRating: true,
+                                          itemCount: 5,
+                                          itemBuilder: (context, c) =>
+                                              const Icon(
+                                            Icons.star,
+                                            color: Colors.amber,
+                                          ),
+                                          onRatingUpdate: (updatraeRating) {},
+                                          ignoreGestures: true,
+                                          unratedColor: Colors.white,
+                                          itemSize: 20,
+                                        ),
+
+                                        const SizedBox(
+                                          width: 8,
+                                        ),
+
+                                        //rating num
+                                        Text(
+                                          '${eachFavoriteStudentRecord.avg_rating == null ? '0' : '(${eachFavoriteStudentRecord.avg_rating.toString()})'}',
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                     const SizedBox(
                                       height: 10,
                                     ),
@@ -307,6 +348,9 @@ class _StudentChatState extends State<StudentChatState> {
                         ),
                         Column(
                           children: [
+                            SizedBox(
+                              height: 30,
+                            ),
                             Align(
                               alignment: Alignment.bottomRight,
                               child: IconButton(

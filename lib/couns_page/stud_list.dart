@@ -41,7 +41,7 @@ class CstudenListState extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Color(0xFF424242),
         title: Text(
-          'FAVOURITE',
+          'STUDENT LIST',
         ),
         automaticallyImplyLeading: false,
       ),
@@ -141,6 +141,27 @@ class CstudenListState extends StatelessWidget {
                                         //name
                                         Expanded(
                                           child: Text(
+                                            "Email: " +
+                                                eachStudentRecord.email!,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              fontSize: 10,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 2,
+                                    ),
+                                    Row(
+                                      children: [
+                                        //name
+                                        Expanded(
+                                          child: Text(
                                             "Student ID:" +
                                                 eachStudentRecord.student_id!,
                                             maxLines: 2,
@@ -183,7 +204,12 @@ class CstudenListState extends StatelessWidget {
                                     Row(
                                       children: [
                                         RatingBar.builder(
-                                          initialRating: 3,
+                                          initialRating: eachStudentRecord
+                                                      .avg_rating ==
+                                                  null
+                                              ? 0
+                                              : double.parse(eachStudentRecord
+                                                  .avg_rating!),
                                           minRating: 1,
                                           direction: Axis.horizontal,
                                           allowHalfRating: true,
@@ -202,7 +228,7 @@ class CstudenListState extends StatelessWidget {
                                           width: 8,
                                         ),
                                         Text(
-                                          "3",
+                                          '${eachStudentRecord.avg_rating == null ? '0' : '(${eachStudentRecord.avg_rating.toString()})'}',
                                           style: const TextStyle(
                                             color: Colors.black,
                                           ),
@@ -222,6 +248,9 @@ class CstudenListState extends StatelessWidget {
                         ),
                         Column(
                           children: [
+                            SizedBox(
+                              height: 25,
+                            ),
                             Align(
                               alignment: Alignment.bottomRight,
                               child: IconButton(

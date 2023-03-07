@@ -122,7 +122,7 @@ class CounselorRegister extends State<CounselorRegisterState> {
                   ),
                   SizedBox(
                     width: 300,
-                    height: 45,
+                    height: 70,
                     child: TextFormField(
                       controller: counselor_name,
                       validator: (val) =>
@@ -140,14 +140,14 @@ class CounselorRegister extends State<CounselorRegisterState> {
                   ),
                   SizedBox(
                     width: 300,
-                    height: 45,
+                    height: 70,
                     child: TextFormField(
                       controller: counselorID,
                       validator: (val) =>
                           val == "" ? "Please enter your Staff ID" : null,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'Department',
+                        labelText: 'Staff ID',
                         fillColor: Color(0xFFB0BEC5),
                         filled: true,
                       ),
@@ -158,14 +158,14 @@ class CounselorRegister extends State<CounselorRegisterState> {
                   ),
                   SizedBox(
                     width: 300,
-                    height: 45,
+                    height: 70,
                     child: TextFormField(
                       controller: counselor_room,
                       validator: (val) =>
                           val == "" ? "Please enter your Office floor" : null,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'Department',
+                        labelText: 'Office floor',
                         fillColor: Color(0xFFB0BEC5),
                         filled: true,
                       ),
@@ -176,7 +176,7 @@ class CounselorRegister extends State<CounselorRegisterState> {
                   ),
                   SizedBox(
                     width: 300,
-                    height: 45,
+                    height: 70,
                     child: TextFormField(
                       controller: email,
                       validator: (val) =>
@@ -184,6 +184,7 @@ class CounselorRegister extends State<CounselorRegisterState> {
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Email',
+                        helperText: 'hello@unikl.edu.my',
                         fillColor: Color(0xFFB0BEC5),
                         filled: true,
                       ),
@@ -194,7 +195,7 @@ class CounselorRegister extends State<CounselorRegisterState> {
                   ),
                   SizedBox(
                     width: 300,
-                    height: 45,
+                    height: 70,
                     child: TextFormField(
                       obscureText: true,
                       controller: pass,

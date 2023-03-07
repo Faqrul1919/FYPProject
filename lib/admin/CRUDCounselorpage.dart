@@ -1,47 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:gmate/admin_model/student.dart';
 import 'package:gmate/admin_service/studentService.dart';
 
-class AddEditStudent extends StatefulWidget {
-  var stud;
+import '../admin_model/counselor.dart';
+import '../admin_service/counselorService.dart';
+
+class AddEditCounselor extends StatefulWidget {
+  var couns;
   var index;
 
   // ignore: use_key_in_widget_constructors
-  AddEditStudent({this.stud, this.index});
+  AddEditCounselor({this.couns, this.index});
 
   @override
-  _AddEditStudentState createState() => _AddEditStudentState();
+  _AddEditCounselorState createState() => _AddEditCounselorState();
 }
 
 final _formKey = GlobalKey<FormState>();
 
-class _AddEditStudentState extends State<AddEditStudent> {
-  final TextEditingController _studentname = TextEditingController();
-  final TextEditingController _student_id = TextEditingController();
-  final TextEditingController _semester = TextEditingController();
-  final TextEditingController _phone_num = TextEditingController();
+class _AddEditCounselorState extends State<AddEditCounselor> {
+  final TextEditingController _counsname = TextEditingController();
+  final TextEditingController _couns_id = TextEditingController();
+  final TextEditingController _couns_room = TextEditingController();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _passwords = TextEditingController();
-  final TextEditingController _rating_code = TextEditingController();
 
   bool editMode = false;
   bool _isObscure = true;
 
-  add(Student stud) async {
-    await StudentService().addStudent(stud).then((success) {
+  add(Counselor couns) async {
+    await CounselorService().addCounselor(couns).then((success) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Student Added!")),
+        const SnackBar(content: Text("Counselor Added!")),
       );
       Navigator.pop(context);
     });
     //print("Cidadão Adicionado!");
   }
 
-  update(Student stud) async {
-    await StudentService().updateStudent(stud).then((success) {
+  update(Counselor couns) async {
+    await CounselorService().updateCounselor(couns).then((success) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Student Updated!")),
+        const SnackBar(content: Text("Counselor Updated!")),
       );
       Navigator.pop(context);
     });
@@ -53,13 +53,11 @@ class _AddEditStudentState extends State<AddEditStudent> {
     super.initState();
     if (widget.index != null) {
       editMode = true;
-      _studentname.text = widget.stud.studentname;
-      _student_id.text = widget.stud.student_id;
-      _semester.text = widget.stud.semester;
-      _phone_num.text = widget.stud.phone_num;
-      _email.text = widget.stud.email;
-      _passwords.text = widget.stud.passwords;
-      _rating_code.text = widget.stud.rating_code;
+      _counsname.text = widget.couns.counselor_name;
+      _couns_id.text = widget.couns.counselorID;
+      _couns_room.text = widget.couns.counselor_room;
+      _email.text = widget.couns.email;
+      _passwords.text = widget.couns.passwords;
       bool _isObscure = true;
     }
   }
@@ -76,7 +74,7 @@ class _AddEditStudentState extends State<AddEditStudent> {
           appBar: AppBar(
             backgroundColor: Colors.grey,
             centerTitle: true,
-            title: Text(editMode ? "UPDATE STUDENT" : "ADD STUDENT"),
+            title: Text(editMode ? "UPDATE COUNSELOR" : "ADD COUNSELOR"),
           ),
           body: Center(
             child: Container(
@@ -92,12 +90,12 @@ class _AddEditStudentState extends State<AddEditStudent> {
                             bottom: 15, left: 10, right: 10),
                         child: TextFormField(
                           textAlign: TextAlign.center,
-                          controller: _studentname,
+                          controller: _counsname,
                           decoration: const InputDecoration(
                             filled: true,
                             fillColor: Colors.white,
-                            labelText: 'Student Name',
-                            hintText: 'Enter Student Name',
+                            labelText: 'Counselor Name',
+                            hintText: 'Enter Counselor Name',
                             border: OutlineInputBorder(),
                             errorBorder: OutlineInputBorder(
                               borderSide:
@@ -111,12 +109,12 @@ class _AddEditStudentState extends State<AddEditStudent> {
                             bottom: 15, left: 10, right: 10),
                         child: TextFormField(
                           textAlign: TextAlign.center,
-                          controller: _student_id,
+                          controller: _couns_id,
                           decoration: const InputDecoration(
                             filled: true,
                             fillColor: Colors.white,
-                            labelText: 'Student ID',
-                            hintText: 'Enter Student ID',
+                            labelText: 'Counselor ID',
+                            hintText: 'Enter Counselor ID',
                             border: OutlineInputBorder(),
                             errorBorder: OutlineInputBorder(
                               borderSide:
@@ -130,31 +128,12 @@ class _AddEditStudentState extends State<AddEditStudent> {
                             bottom: 15, left: 10, right: 10),
                         child: TextFormField(
                           textAlign: TextAlign.center,
-                          controller: _semester,
+                          controller: _couns_room,
                           decoration: const InputDecoration(
                             filled: true,
                             fillColor: Colors.white,
-                            labelText: 'Semester',
-                            hintText: 'Enter Student Semester',
-                            border: OutlineInputBorder(),
-                            errorBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.red, width: 5),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            bottom: 15, left: 10, right: 10),
-                        child: TextFormField(
-                          textAlign: TextAlign.center,
-                          controller: _phone_num,
-                          decoration: const InputDecoration(
-                            filled: true,
-                            fillColor: Colors.white,
-                            labelText: 'Phone Number',
-                            hintText: 'Enter Student Phone Number',
+                            labelText: 'Counselor Room',
+                            hintText: 'Enter Counselor Room',
                             border: OutlineInputBorder(),
                             errorBorder: OutlineInputBorder(
                               borderSide:
@@ -173,7 +152,7 @@ class _AddEditStudentState extends State<AddEditStudent> {
                             filled: true,
                             fillColor: Colors.white,
                             labelText: 'Email',
-                            hintText: 'Enter Student Email',
+                            hintText: 'Enter Counselor Email',
                             border: OutlineInputBorder(),
                             errorBorder: OutlineInputBorder(
                               borderSide:
@@ -214,64 +193,39 @@ class _AddEditStudentState extends State<AddEditStudent> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            bottom: 15, left: 10, right: 10),
-                        child: TextFormField(
-                          maxLength: 5,
-                          textAlign: TextAlign.center,
-                          keyboardType: TextInputType.number,
-                          controller: _rating_code,
-                          decoration: const InputDecoration(
-                            filled: true,
-                            fillColor: Colors.white,
-                            labelText: 'Rating Code',
-                            hintText: 'Enter Student Rating Code',
-                            border: OutlineInputBorder(),
-                            errorBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.red, width: 5),
-                            ),
-                          ),
-                        ),
-                      ),
                       ElevatedButton(
                         onPressed: () {
                           if (editMode) {
-                            Student stud = Student(
-                                acc_id: widget.stud.acc_id,
-                                studentname: _studentname.text,
-                                student_id: _student_id.text,
-                                semester: _semester.text,
-                                phone_num: _phone_num.text,
-                                email: _email.text,
-                                passwords: _passwords.text,
-                                rating_code: _rating_code.text);
-                            update(stud);
+                            Counselor couns = Counselor(
+                              counselor_id: widget.couns.counselor_id,
+                              counselor_name: _counsname.text,
+                              counselorID: _couns_id.text,
+                              counselor_room: _couns_room.text,
+                              email: _email.text,
+                              passwords: _passwords.text,
+                            );
+                            update(couns);
                           } else {
-                            if (_studentname.text.isEmpty &&
-                                _student_id.text.isEmpty &&
-                                _semester.text.isEmpty &&
-                                _phone_num.text.isEmpty &&
+                            if (_counsname.text.isEmpty &&
+                                _couns_id.text.isEmpty &&
+                                _couns_room.text.isEmpty &&
                                 _email.text.isEmpty &&
-                                _passwords.text.isEmpty &&
-                                _rating_code.text.isEmpty) {
+                                _passwords.text.isEmpty) {
                               // ignore: prefer_const_constructors
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                     content: Text("This field is required")),
                               );
                             } else {
-                              Student stud = Student(
-                                  acc_id: '',
-                                  studentname: _studentname.text,
-                                  student_id: _student_id.text,
-                                  semester: _semester.text,
-                                  phone_num: _phone_num.text,
-                                  email: _email.text,
-                                  passwords: _passwords.text,
-                                  rating_code: _rating_code.text);
-                              add(stud);
+                              Counselor couns = Counselor(
+                                counselor_id: '',
+                                counselor_name: _counsname.text,
+                                counselorID: _couns_id.text,
+                                counselor_room: _couns_room.text,
+                                email: _email.text,
+                                passwords: _passwords.text,
+                              );
+                              add(couns);
                             }
                           }
                         },

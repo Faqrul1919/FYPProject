@@ -1,44 +1,45 @@
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:gmate/admin_model/subject.dart';
-import 'package:gmate/admin_service/subjectService.dart';
 import 'package:flutter/material.dart';
-import 'package:gmate/started/get_started.dart';
+import 'package:gmate/admin/CRUDStudentpage.dart';
+import 'package:gmate/admin_model/counselor.dart';
+import 'package:gmate/admin_model/student.dart';
+import 'package:gmate/admin_service/studentService.dart';
 
-import 'CRUDSubjectpage.dart';
+import '../admin_service/counselorService.dart';
+import 'CRUDCounselorpage.dart';
 
-class SubjectList extends StatefulWidget {
+class CounselorList extends StatefulWidget {
   @override
-  _SubjectListState createState() => _SubjectListState();
+  _CounselorListState createState() => _CounselorListState();
 }
 
-class _SubjectListState extends State<SubjectList> {
-  late List<Subject> subjectList;
+class _CounselorListState extends State<CounselorList> {
+  late List<Counselor> counselorlist;
 
   bool loading = true;
 
-  getAllSubjects() async {
-    subjectList = await SubjectService().getSubject();
+  getAllCounselor() async {
+    counselorlist = await CounselorService().getCounselor();
     setState(() {
       loading = false;
     });
     //  print("itens : ${itensList.length}");
   }
 
-  delete(Subject subject) async {
-    await SubjectService().deleteSubject(subject);
+  delete(Counselor couns) async {
+    await CounselorService().deleteCounselor(couns);
     setState(() {
       loading = false;
-      getAllSubjects();
+      getAllCounselor();
     });
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: const Text("Subject Deleted")),
+      SnackBar(content: const Text("Counselor Deleted")),
     );
   }
 
   @override
   void initState() {
     super.initState();
-    getAllSubjects();
+    getAllCounselor();
   }
 
   @override
@@ -46,9 +47,9 @@ class _SubjectListState extends State<SubjectList> {
     return Scaffold(
       backgroundColor: Colors.grey[350],
       appBar: AppBar(
-        backgroundColor: Color(0xFF424242),
+        backgroundColor: Color.fromARGB(255, 110, 109, 109),
         automaticallyImplyLeading: false,
-        title: Text('Subjects List'),
+        title: Text('Counselor List'),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
@@ -57,27 +58,9 @@ class _SubjectListState extends State<SubjectList> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => AddEditSubjects(),
+                  builder: (context) => AddEditCounselor(),
                 ),
-              ).then((value) => getAllSubjects());
-            },
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.logout,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => GetStartedState()));
-              Fluttertoast.showToast(
-                  msg: "Successfully Logout",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.BOTTOM,
-                  timeInSecForIosWeb: 1,
-                  backgroundColor: Colors.green,
-                  textColor: Colors.black,
-                  fontSize: 16.0);
+              ).then((value) => getAllCounselor());
             },
           ),
         ],
@@ -88,40 +71,41 @@ class _SubjectListState extends State<SubjectList> {
                 child: CircularProgressIndicator(),
               )
             : ListView.builder(
-                itemCount: subjectList.length,
+                itemCount: counselorlist.length,
                 physics: BouncingScrollPhysics(),
                 itemBuilder: (ctx, i) {
-                  Subject subject = subjectList[i];
+                  Counselor couns = counselorlist[i];
                   return Card(
                     elevation: 2,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
                     child: ListTile(
-                      contentPadding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
+                      contentPadding: EdgeInsets.fromLTRB(10, 3, 10, 3),
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => AddEditSubjects(
-                              subject: subject,
+                            builder: (context) => AddEditCounselor(
+                              couns: couns,
                               index: i,
                             ),
                           ),
-                        ).then((value) => getAllSubjects());
+                        ).then((value) => AddEditCounselor());
                       },
                       leading: CircleAvatar(
                         backgroundColor: Colors.blueGrey,
-                        child: Text('${subject.title[1]}' +
-                            '${subject.title[subject.title.length - 1]}'),
+                        child: Text('${couns.counselor_name[0]}' +
+                            '${couns.counselor_name[couns.counselor_name.length - 1]}'),
                       ),
-                      title: Text(subject.title),
+                      title: Text(couns.counselor_name),
+                      subtitle: Text(couns.counselorID),
                       trailing: IconButton(
                           icon: Icon(Icons.delete),
                           onPressed: () {
                             showDialog(
                               context: context,
                               builder: (ctx) => AlertDialog(
-                                title: Text('Delete Subject'),
+                                title: Text('Delete Student'),
                                 content: Text('Are You Sure?'),
                                 actions: <Widget>[
                                   TextButton(
@@ -138,7 +122,7 @@ class _SubjectListState extends State<SubjectList> {
                               ),
                             ).then((confirmed) {
                               if (confirmed) {
-                                delete(subject);
+                                delete(couns);
                               }
                             });
                           }),

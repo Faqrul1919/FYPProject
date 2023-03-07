@@ -43,7 +43,7 @@ class _AStudentListState extends State<AStudentList> {
     return Scaffold(
       backgroundColor: Colors.grey[350],
       appBar: AppBar(
-        backgroundColor: Color(0xFF424242),
+        backgroundColor: Color.fromARGB(255, 110, 109, 109),
         automaticallyImplyLeading: false,
         title: Text('BSE Students List'),
         actions: <Widget>[

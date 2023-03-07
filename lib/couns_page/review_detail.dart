@@ -27,18 +27,34 @@ class _StudentReview extends State<StudentReviewScreen> {
   final itemDetailsController = Get.put(ItemDetailsController());
   final currentOnlineCounselor = Get.put(CurrentUser());
 
+  // _launchWhatsapp() async {
+  //   var whatsapp = widget.itemInfo!.phone_num!;
+  //   var whatsappAndroid = Uri.parse(
+  //       "whatsapp://send?phone=$whatsapp&text=Hello, my name is ,\n I'm counselor for Unikl MIIT.");
+  //   if (await canLaunchUrl(whatsappAndroid)) {
+  //     await launchUrl(whatsappAndroid);
+  //   } else {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(
+  //         content: Text("WhatsApp is not installed on the device"),
+  //       ),
+  //     );
+  //   }
+  // }
+
   _launchWhatsapp() async {
-    var whatsapp = widget.itemInfo!.phone_num!;
-    var whatsappAndroid = Uri.parse(
-        "whatsapp://send?phone=$whatsapp&text=Hello, my name is ,\n I'm counselor for Unikl MIIT.");
-    if (await canLaunchUrl(whatsappAndroid)) {
-      await launchUrl(whatsappAndroid);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("WhatsApp is not installed on the device"),
-        ),
-      );
+    var contact = widget.itemInfo!.phone_num.toString();
+    var sname = widget.itemInfo!.studentname.toString();
+    var cnme = currentOnlineCounselor.user2.counselor_name.toString();
+    var androidUrl =
+        "whatsapp://send?phone=+6$contact&text=Hello $sname, my name is $cnme, Im counselor for Unikl MIIT.";
+    var iosUrl =
+        "https://wa.me/$contact?text=${Uri.parse('Hello, my name is $cnme, Im counselor for Unikl MIIT.')}";
+
+    try {
+      await launchUrl(Uri.parse(androidUrl));
+    } on Exception {
+      throw ('WhatsApp is not installed.');
     }
   }
 
@@ -142,11 +158,15 @@ class _StudentReview extends State<StudentReviewScreen> {
         var resBodyOfAddFavorite = jsonDecode(res.body);
         if (resBodyOfAddFavorite['success'] == true) {
           Fluttertoast.showToast(
-              msg: "item saved to your Favorite List Successfully.");
+            msg: "Save student to favourite.",
+            backgroundColor: Colors.green,
+          );
 
           validateFavoriteList();
         } else {
-          Fluttertoast.showToast(msg: "Item not saved to your Favorite List.");
+          Fluttertoast.showToast(
+              msg: "Student not saved to your Favorite List.",
+              backgroundColor: Colors.red);
         }
       } else {
         Fluttertoast.showToast(msg: "Status is not 200");
@@ -171,7 +191,9 @@ class _StudentReview extends State<StudentReviewScreen> {
       {
         var resBodyOfDeleteFavorite = jsonDecode(res.body);
         if (resBodyOfDeleteFavorite['success'] == true) {
-          Fluttertoast.showToast(msg: "item Deleted from your Favorite List.");
+          Fluttertoast.showToast(
+              msg: "Student remove from Favorite.",
+              backgroundColor: Colors.red);
 
           validateFavoriteList();
         } else {
@@ -212,6 +234,7 @@ class _StudentReview extends State<StudentReviewScreen> {
             alignment: Alignment.bottomCenter,
             child: studentReviewWidget(),
           ),
+
           Align(
             alignment: Alignment.bottomCenter,
             child: Material(
@@ -416,7 +439,9 @@ class _StudentReview extends State<StudentReviewScreen> {
                         children: [
                           //rating bar
                           RatingBar.builder(
-                            initialRating: 3.5,
+                            initialRating: widget.itemInfo!.avg_rating == null
+                                ? 0
+                                : double.parse(widget.itemInfo!.avg_rating!),
                             minRating: 1,
                             direction: Axis.horizontal,
                             allowHalfRating: true,
@@ -437,7 +462,7 @@ class _StudentReview extends State<StudentReviewScreen> {
 
                           //rating num
                           Text(
-                            "3.5",
+                            '${widget.itemInfo!.avg_rating == null ? '0' : '(${widget.itemInfo!.avg_rating.toString()})'}',
                             style: const TextStyle(
                               color: Colors.black,
                             ),
@@ -491,7 +516,7 @@ class _StudentReview extends State<StudentReviewScreen> {
               child: commentNratingWidget(context),
             ),
             const SizedBox(
-              height: 43,
+              height: 55,
             ),
             //add to cart button
           ],
@@ -534,7 +559,7 @@ class _StudentReview extends State<StudentReviewScreen> {
                     index == dataSnapShot.data!.length - 1 ? 16 : 8,
                   ),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(0),
+                    borderRadius: BorderRadius.circular(4),
                     color: Color.fromARGB(255, 143, 138, 138),
                     boxShadow: const [
                       BoxShadow(
@@ -600,13 +625,33 @@ class _StudentReview extends State<StudentReviewScreen> {
                                   ),
                                 ],
                               ),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              Row(
+                                // ignore: prefer_const_literals_to_create_immutables
+                                children: [
+                                  //name
+                                  Expanded(
+                                    child: Text(
+                                      "Comment : ",
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        fontSize: 10,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                               Row(
                                 children: [
                                   //name
                                   Expanded(
                                     child: Text(
-                                      "Comment : \n" +
-                                          eachStudentRecord.comments!,
+                                      eachStudentRecord.comments!,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
@@ -673,7 +718,7 @@ class _StudentReview extends State<StudentReviewScreen> {
                     index == dataSnapShot.data!.length - 1 ? 16 : 8,
                   ),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(0),
+                    borderRadius: BorderRadius.circular(4),
                     color: Color.fromARGB(255, 143, 138, 138),
                     boxShadow: const [
                       BoxShadow(
@@ -701,11 +746,25 @@ class _StudentReview extends State<StudentReviewScreen> {
                                     child: Text(
                                       eachStudentRecord.months! +
                                           "\n" +
-                                          eachStudentRecord.title! +
-                                          "  " +
-                                          "[" +
-                                          eachStudentRecord.groups! +
-                                          "]",
+                                          eachStudentRecord.title!,
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 1,
+                              ),
+                              Row(
+                                children: [
+                                  //name
+                                  Expanded(
+                                    child: Text(
+                                      "[" + eachStudentRecord.groups! + "]",
                                       style: TextStyle(
                                         fontSize: 14,
                                         color: Colors.black,

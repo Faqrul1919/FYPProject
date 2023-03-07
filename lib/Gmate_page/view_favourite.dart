@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'dart:convert';
+import 'dart:io';
 import 'package:gmate/Gmate_page/rating&comment.dart';
 import 'package:gmate/Gmate_page/rating_auth.dart';
 import 'package:gmate/Gmate_page/sub&groupController.dart';
@@ -33,20 +34,46 @@ class _StudentFavouriteReview extends State<StudentFavoriteInformationScreen> {
   final itemDetailsController = Get.put(DataController());
   final currentOnlineUser = Get.put(CurrentUser());
 
-  _launchWhatsapp() async {
-    var whatsapp = widget.itemInfo!.phone_num!;
-    var whatsappAndroid = Uri.parse(
-        "whatsapp://send?phone=$whatsapp&text=Hello, my name is ,\n I'm counselor for Unikl MIIT.");
-    if (await canLaunchUrl(whatsappAndroid)) {
-      await launchUrl(whatsappAndroid);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("WhatsApp is not installed on the device"),
-        ),
-      );
+  // _launchWhatsapp() async {
+  //   var whatsapp = widget.itemInfo!.phone_num;
+  //   // var whatsappAndroid = Uri.parse("https://wa.me/+6$whatsapp");
+  //   var whatsappAndroid =
+  //       Uri.parse('whatsapp://send?phone=+6$whatsapp&text=Hello%20World!');
+
+  //   if (await canLaunchUrl(whatsappAndroid)) {
+  //     await launchUrl(whatsappAndroid);
+  //   } else {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(
+  //         content: Text("WhatsApp is not installed on the device"),
+  //       ),
+  //     );
+  //   }
+  // }
+
+  whatsapp() async {
+    var sname = widget.itemInfo!.studentname.toString();
+    var contact = widget.itemInfo!.phone_num.toString();
+    var androidUrl = "whatsapp://send?phone=+6$contact&text=Hello $sname";
+    var iosUrl =
+        "https://wa.me/$contact?text=${Uri.parse('Hi, I need some help')}";
+
+    try {
+      await launchUrl(Uri.parse(androidUrl));
+    } on Exception {
+      throw ('WhatsApp is not installed.');
     }
   }
+
+  // _launchWhatsapp() async {
+  //   var whatsapp = widget.itemInfo!.phone_num;
+  //   var url = 'https://wa.me/6$whatsapp';
+  //   if (await launch(url)) {
+  //     await canLaunch(url);
+  //   } else {
+  //     throw 'Could not launch $url';
+  //   }
+  // }
 
   Future<List<Review>> getReviewList() async {
     List<Review> reviewList = [];
@@ -148,11 +175,14 @@ class _StudentFavouriteReview extends State<StudentFavoriteInformationScreen> {
         var resBodyOfAddFavorite = jsonDecode(res.body);
         if (resBodyOfAddFavorite['success'] == true) {
           Fluttertoast.showToast(
-              msg: "item saved to your Favorite List Successfully.");
+            msg: "Save student to favourite.",
+            backgroundColor: Colors.green,
+          );
 
           validateFavoriteList();
         } else {
-          Fluttertoast.showToast(msg: "Item not saved to your Favorite List.");
+          Fluttertoast.showToast(
+              msg: "Student not saved to your Favorite List.");
         }
       } else {
         Fluttertoast.showToast(msg: "Status is not 200");
@@ -177,7 +207,10 @@ class _StudentFavouriteReview extends State<StudentFavoriteInformationScreen> {
       {
         var resBodyOfDeleteFavorite = jsonDecode(res.body);
         if (resBodyOfDeleteFavorite['success'] == true) {
-          Fluttertoast.showToast(msg: "item Deleted from your Favorite List.");
+          Fluttertoast.showToast(
+            msg: "Student removed from favourite.",
+            backgroundColor: Colors.red,
+          );
 
           validateFavoriteList();
         } else {
@@ -227,7 +260,8 @@ class _StudentFavouriteReview extends State<StudentFavoriteInformationScreen> {
               child: InkWell(
                 //link through whatapp
                 onTap: () {
-                  _launchWhatsapp();
+                  whatsapp();
+                  // _launchWhatsapp();
                 },
                 borderRadius: BorderRadius.circular(10),
                 child: Container(
@@ -422,7 +456,9 @@ class _StudentFavouriteReview extends State<StudentFavoriteInformationScreen> {
                         children: [
                           //rating bar
                           RatingBar.builder(
-                            initialRating: 3.5,
+                            initialRating: widget.itemInfo!.avg_rating == null
+                                ? 0
+                                : double.parse(widget.itemInfo!.avg_rating!),
                             minRating: 1,
                             direction: Axis.horizontal,
                             allowHalfRating: true,
@@ -443,7 +479,7 @@ class _StudentFavouriteReview extends State<StudentFavoriteInformationScreen> {
 
                           //rating num
                           Text(
-                            "3.5",
+                            '${widget.itemInfo!.avg_rating == null ? '0' : '(${widget.itemInfo!.avg_rating.toString()})'}',
                             style: const TextStyle(
                               color: Colors.black,
                             ),
@@ -582,7 +618,7 @@ class _StudentFavouriteReview extends State<StudentFavoriteInformationScreen> {
                     index == dataSnapShot.data!.length - 1 ? 16 : 8,
                   ),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(0),
+                    borderRadius: BorderRadius.circular(4),
                     color: Color.fromARGB(255, 143, 138, 138),
                     boxShadow: const [
                       BoxShadow(

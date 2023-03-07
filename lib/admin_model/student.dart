@@ -6,6 +6,7 @@ class Student {
   final String phone_num;
   final String email;
   final String passwords;
+  final String rating_code;
 
   Student(
       {required this.acc_id,
@@ -14,7 +15,8 @@ class Student {
       required this.semester,
       required this.phone_num,
       required this.email,
-      required this.passwords});
+      required this.passwords,
+      required this.rating_code});
 
   factory Student.fromjson(Map<String, dynamic> json) {
     return Student(
@@ -25,6 +27,7 @@ class Student {
       phone_num: json['phone_num'] as String,
       email: json['email'] as String,
       passwords: json['passwords'] as String,
+      rating_code: json['rating_code'] as String,
     );
   }
   Map<String, dynamic> toJsonAdd() {
@@ -36,6 +39,7 @@ class Student {
       "phone_num": phone_num != null ? phone_num.toString() : '',
       "email": email != null ? email.toString() : '',
       "passwords": passwords != null ? passwords.toString() : '',
+      "rating_code": rating_code != null ? rating_code.toString() : '',
     };
   }
 
@@ -48,6 +52,7 @@ class Student {
       "phone_num": phone_num != null ? phone_num.toString() : '',
       "email": email != null ? email.toString() : '',
       "passwords": passwords != null ? passwords.toString() : '',
+      "rating_code": rating_code != null ? rating_code.toString() : '',
     };
   }
 }

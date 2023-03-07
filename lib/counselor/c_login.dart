@@ -99,6 +99,7 @@ class CounselorLogin extends State<CounselorLoginState> {
                         ),
                         border: OutlineInputBorder(),
                         labelText: 'Email',
+                        helperText: 'hello@unikl.edu.my',
                         fillColor: Color(0xFFB0BEC5),
                         filled: true,
                       ),
@@ -162,17 +163,6 @@ class CounselorLogin extends State<CounselorLoginState> {
                   SizedBox(
                     height: 10,
                   ),
-                  ElevatedButton(
-                      onPressed: () {
-                        Get.to(CounsHomeState());
-                      },
-                      child: Text('try&error'),
-                      style: ElevatedButton.styleFrom(
-                          textStyle: const TextStyle(fontSize: 17),
-                          primary: Colors.grey,
-                          fixedSize: const Size(210, 60),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50)))),
                 ],
               ),
             ),

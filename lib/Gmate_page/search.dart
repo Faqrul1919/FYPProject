@@ -153,7 +153,7 @@ class StudentSearch extends State<SearchState> {
                               ),
                               visible: false,
                             )),
-                            Center(
+                            Expanded(
                                 child: Text(
                               subject['title'],
                               textAlign: TextAlign.center,

@@ -87,7 +87,7 @@ class EditProfile extends State<CounsEditProfileState> {
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            color: Colors.black,
+            color: Colors.white,
           ),
           onPressed: () {
             Get.back();
@@ -98,10 +98,6 @@ class EditProfile extends State<CounsEditProfileState> {
         padding: EdgeInsets.only(left: 16, top: 25, right: 16),
         child: ListView(
           children: [
-            Text(
-              "Edit Profile",
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
-            ),
             SizedBox(
               height: 15,
             ),

@@ -1,8 +1,6 @@
 // ignore_for_file: deprecated_member_use, non_constant_identifier_names
 
 import 'dart:convert';
-import 'dart:ffi';
-import 'dart:math';
 
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -209,7 +207,7 @@ class EditProfile extends State<EditProfileState> {
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            color: Colors.black,
+            color: Colors.white,
           ),
           onPressed: () {
             Get.back();
@@ -220,10 +218,6 @@ class EditProfile extends State<EditProfileState> {
         padding: EdgeInsets.only(left: 16, top: 25, right: 16),
         child: ListView(
           children: [
-            Text(
-              "Edit Profile",
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
-            ),
             SizedBox(
               height: 15,
             ),
@@ -293,7 +287,7 @@ class EditProfile extends State<EditProfileState> {
                               ),
                               visible: false,
                             )),
-                            Center(child: Text(subject['title'])),
+                            Expanded(child: Text(subject['title'])),
                           ],
                         ),
                         value: subject['subject_id']);
@@ -494,7 +488,7 @@ class EditProfile extends State<EditProfileState> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 35.0),
       child: TextField(
-        maxLength: maxnum = 5,
+        maxLength: maxnum,
         readOnly: readonlytext,
         controller: information,
         obscureText: isPasswordTextField ? showPassword : false,

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 class Review {
   int? comment_id;
   int? acc_id;
@@ -26,6 +28,7 @@ class StudentDB {
   String? semester;
   String? phone_num;
   String? email;
+  String? avg_rating;
 
   StudentDB({
     this.acc_id,
@@ -34,6 +37,7 @@ class StudentDB {
     this.semester,
     this.phone_num,
     this.email,
+    this.avg_rating,
   });
 
   factory StudentDB.fromJson(Map<String, dynamic> json) => StudentDB(
@@ -43,5 +47,6 @@ class StudentDB {
         semester: json["semester"],
         phone_num: json["phone_num"],
         email: json["email"],
+        avg_rating: json["avg_rating"],
       );
 }

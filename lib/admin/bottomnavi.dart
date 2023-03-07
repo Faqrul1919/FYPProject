@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gmate/admin/groupList.dart';
 import 'package:gmate/admin/adminStudentList.dart';
 import 'package:gmate/admin/subjectList.dart';
+import 'package:gmate/admin/tabbar.dart';
+
+import 'intakeList.dart';
 
 class bottomNav extends StatefulWidget {
   @override
@@ -10,7 +13,12 @@ class bottomNav extends StatefulWidget {
 
 class _bottomNavState extends State<bottomNav> {
   int _currentIndex = 0;
-  static List<Widget> pages = [SubjectList(), GroupList(), AStudentList()];
+  static List<Widget> pages = [
+    SubjectList(),
+    GroupList(),
+    IntakeList(),
+    TabUser(),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,9 +59,14 @@ class _bottomNavState extends State<bottomNav> {
               label: 'Groups',
             ),
             NavigationDestination(
+              selectedIcon: Icon(Icons.calendar_month),
+              icon: Icon(Icons.calendar_month_outlined),
+              label: 'Intake',
+            ),
+            NavigationDestination(
               selectedIcon: Icon(Icons.badge),
               icon: Icon(Icons.badge_outlined),
-              label: 'Students',
+              label: 'User',
             ),
           ],
         ),

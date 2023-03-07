@@ -28,9 +28,9 @@ class _adminState extends State<admin> {
       Fluttertoast.showToast(
           msg: "Login Successful",
           toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
+          gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.grey,
+          backgroundColor: Colors.green,
           textColor: Colors.black,
           fontSize: 16.0);
       Navigator.push(
@@ -39,9 +39,9 @@ class _adminState extends State<admin> {
       Fluttertoast.showToast(
           msg: "Email or Password Incorrect!",
           toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
+          gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.grey,
+          backgroundColor: Colors.red,
           textColor: Colors.black,
           fontSize: 16.0);
     }
@@ -128,23 +128,6 @@ class _adminState extends State<admin> {
                   SizedBox(
                     height: 10,
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => bottomNav()),
-                        );
-                      },
-                      child: Text('try&error'),
-                      style: ElevatedButton.styleFrom(
-                          textStyle: const TextStyle(fontSize: 17),
-                          primary: Colors.grey,
-                          fixedSize: const Size(210, 60),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50)))),
                 ],
               ),
             ),

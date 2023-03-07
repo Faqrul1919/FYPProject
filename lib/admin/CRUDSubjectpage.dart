@@ -13,7 +13,6 @@ class AddEditSubjects extends StatefulWidget {
 }
 
 class _AddEditSubjectsState extends State<AddEditSubjects> {
-  final TextEditingController sub_codes = TextEditingController();
   final TextEditingController title = TextEditingController();
 
   bool editMode = false;
@@ -77,13 +76,39 @@ class _AddEditSubjectsState extends State<AddEditSubjects> {
                           Radius.circular(80),
                         ),
                       ),
-                      child: TextField(
+                      child: TextFormField(
                         textAlign: TextAlign.center,
                         controller: title,
                         decoration: const InputDecoration(
                           // label: Text('TITLE'),
                           hintText: 'Subject Title',
+
                           border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Center(
+                      child: Text(
+                        "Hint: (CODE) Subject Title",
+                        maxLines: 2,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Text(
+                        "Eg. (ISB1234) Programing Language",
+                        maxLines: 2,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -99,7 +124,7 @@ class _AddEditSubjectsState extends State<AddEditSubjects> {
                           );
                           update(subject);
                         } else {
-                          if (sub_codes.text.isEmpty) {
+                          if (title.text.isEmpty) {
                             // ignore: prefer_const_constructors
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(

@@ -212,6 +212,7 @@ class StudentRegister extends State<StudentRegisterState> {
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Email',
+                          helperText: 'hello@s.unikl.edu.my',
                           fillColor: Color(0xFFB0BEC5),
                           filled: true,
                         ),
@@ -243,7 +244,6 @@ class StudentRegister extends State<StudentRegisterState> {
                       width: 300,
                       height: 70,
                       child: TextFormField(
-                        obscureText: true,
                         keyboardType: TextInputType.number,
                         maxLength: 5,
                         controller: rating_code,
@@ -258,7 +258,7 @@ class StudentRegister extends State<StudentRegisterState> {
                       ),
                     ),
                     Text(
-                      "Hint: Only required 5 digit number",
+                      "Hint: Maximum 5 digit number",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
